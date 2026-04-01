@@ -1,4 +1,4 @@
-package dev.whitechoke.userService.domain;
+package dev.whitechoke.userService.utils;
 
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
 import dev.whitechoke.userService.api.dto.ProfileCreateResponseDto;

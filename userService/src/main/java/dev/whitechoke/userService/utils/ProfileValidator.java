@@ -3,14 +3,16 @@ package dev.whitechoke.userService.utils;
 import java.time.LocalDate;
 
 import dev.whitechoke.userService.api.dto.ProfileDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProfileValidator {
 
     public <T extends ProfileDto> void validate(T dto) {
         if (dto.birthday() == null) {
             throw new IllegalArgumentException("Birthday cant be null");
         }
-        if (dto.birthday().isBefore(
+        if (dto.birthday().isAfter(
             LocalDate.now().minusYears(16)
         )) {
             throw new IllegalAccessError("User does not meet the age requirements");
