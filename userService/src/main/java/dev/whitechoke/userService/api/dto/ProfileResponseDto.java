@@ -5,7 +5,7 @@ import dev.whitechoke.userService.domain.db.Gender;
 import java.time.Instant;
 import java.time.LocalDate;
 
-public record ProfileCreateResponseDto(
+public record ProfileResponseDto(
         Long id,
         Long telegramId,
         String name,

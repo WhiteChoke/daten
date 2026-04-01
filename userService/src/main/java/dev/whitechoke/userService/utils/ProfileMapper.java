@@ -1,7 +1,7 @@
 package dev.whitechoke.userService.utils;
 
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
-import dev.whitechoke.userService.api.dto.ProfileCreateResponseDto;
+import dev.whitechoke.userService.api.dto.ProfileResponseDto;
 import dev.whitechoke.userService.domain.db.ProfileEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -13,5 +13,5 @@ import org.mapstruct.ReportingPolicy;
 )
 public interface ProfileMapper {
     ProfileEntity toProfileEntity(ProfileCreateRequestDto request);
-    ProfileCreateResponseDto toCreateResponseDto(ProfileEntity entity);
+    ProfileResponseDto toResponseDto(ProfileEntity entity);
 }

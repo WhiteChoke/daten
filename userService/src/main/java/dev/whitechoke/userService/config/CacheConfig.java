@@ -1,6 +1,6 @@
 package dev.whitechoke.userService.config;
 
-import dev.whitechoke.userService.api.dto.ProfileCreateResponseDto;
+import dev.whitechoke.userService.api.dto.ProfileResponseDto;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +24,7 @@ public class CacheConfig {
         RedisConnectionFactory redisConnectionFactory,
         ObjectMapper objectMapper
     ){
-        var serializer = new JacksonJsonRedisSerializer<>(objectMapper, ProfileCreateResponseDto.class);
+        var serializer = new JacksonJsonRedisSerializer<>(objectMapper, ProfileResponseDto.class);
 
         var config = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofMinutes(30))
