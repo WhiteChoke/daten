@@ -36,4 +36,15 @@ public class ProfileController {
                 .status(HttpStatus.OK)
                 .body(response);
     }
+
+    @DeleteMapping("{telegramId}")
+    public ResponseEntity<Long> deactivateProfile(
+            @PathVariable Long telegramId
+    ) {
+        var id = service.deactivateProfile(telegramId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(id);
+    }
 }

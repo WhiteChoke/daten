@@ -8,6 +8,7 @@ import dev.whitechoke.userService.utils.ProfileValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -39,11 +40,22 @@ public class ProfileService {
        return mapper.toResponseDto(saved);
     }
 
-    @CachePut(value = "profile", key = "#result.id")
+    @Cacheable(value = "profile", key = "#id")
     public ProfileResponseDto getProfileById(Long id) {
         var entity = profileRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Not found entity with id=" + id));
 
         return mapper.toResponseDto(entity);
+    }
+
+    @Transactional
+    @CacheEvict(value = "profile", key = "#result")
+    public Long deactivateProfile(Long telegramId) {
+        var entity = profileRepository.findByTelegramId(telegramId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found entity with telegram id=" + telegramId));
+
+        profileRepository.delete(entity);
+
+        return entity.getId();
     }
 }
