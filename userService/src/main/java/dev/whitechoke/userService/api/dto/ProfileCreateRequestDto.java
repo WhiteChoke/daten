@@ -2,12 +2,12 @@ package dev.whitechoke.userService.api.dto;
 
 import dev.whitechoke.userService.domain.db.Gender;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public record ProfileCreateRequestDto(
         Long telegramId,
         String name,
-        Date birthday,
+        LocalDate birthday,
         Short maxAge,
         Short minAge,
         Gender gender,

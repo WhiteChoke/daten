@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -36,7 +36,7 @@ public class ProfileEntity {
     private String name;
 
     @Column(name = "birthday")
-    private Date birthday;
+    private LocalDate birthday;
 
     @Column(name = "max_age")
     private Short maxAge;
