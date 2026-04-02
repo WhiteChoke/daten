@@ -1,6 +1,7 @@
 package dev.whitechoke.userService.domain;
 
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
+import dev.whitechoke.userService.api.dto.ProfileGetByFilterRequestDto;
 import dev.whitechoke.userService.api.dto.ProfileResponseDto;
 import dev.whitechoke.userService.domain.db.ProfileRepository;
 import dev.whitechoke.userService.utils.ProfileMapper;
@@ -8,8 +9,10 @@ import dev.whitechoke.userService.utils.ProfileValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.locationtech.jts.geom.Coordinate;
+
+import org.apache.catalina.webresources.Cache;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -26,7 +30,6 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ProfileValidator validator;
     private final ProfileMapper mapper;
-    private final GeometryFactory geometryFactory;
 
     @Transactional
     @CachePut(value = "profile", key = "#result.id")
@@ -49,6 +52,19 @@ public class ProfileService {
                 .orElseThrow(() -> new EntityNotFoundException("Not found entity with id=" + id));
 
         return mapper.toResponseDto(entity);
+    }
+
+    public List<Long> getProfilesByFilter(
+            ProfileGetByFilterRequestDto request
+    ) {
+        return  profileRepository.findProfilesByFilter(
+                request.latitude(),
+                request.longitude(),
+                request.radius(),
+                request.maxAge(),
+                request.minAge(),
+                request.gender()
+        );
     }
 
     @Transactional
