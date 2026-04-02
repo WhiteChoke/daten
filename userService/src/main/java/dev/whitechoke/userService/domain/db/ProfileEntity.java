@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.locationtech.jts.geom.Point;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 
@@ -52,11 +52,8 @@ public class ProfileEntity {
     @Enumerated(value = EnumType.STRING)
     private Gender searchGender;
 
-    @Column(name = "latitude")
-    private Double latitude;
-
-    @Column(name = "longitude")
-    private Double longitude;
+    @Column(name = "coordinates", columnDefinition = "geography")
+    private Point coordinates;
 
     @Column(name = "registered_at")
     private Instant registeredAt;

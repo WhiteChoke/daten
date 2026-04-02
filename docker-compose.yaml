@@ -1,12 +1,12 @@
 services:
   postgres:
-    image: postgres:14.22
+    image: postgis/postgis
     container_name: daten_db
     restart: unless-stopped
     ports:
       - "5433:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -15,7 +15,6 @@ services:
     image: apache/kafka:4.0.2
     container_name: broker
     ports:
-      - "29092:29092"
       - "9092:9092"
     volumes:
       - kafka_data:/var/lib/kafka/data

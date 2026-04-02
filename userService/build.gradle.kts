@@ -13,6 +13,9 @@ java {
 }
 
 dependencies {
+    implementation("com.graphhopper.external:jackson-datatype-jts:2.21.0")
+    implementation("org.locationtech.jts:jts-core:1.20.0")
+    implementation("org.hibernate.orm:hibernate-spatial:7.3.0.Final")
     implementation("org.mapstruct:mapstruct:1.6.3")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
     annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")

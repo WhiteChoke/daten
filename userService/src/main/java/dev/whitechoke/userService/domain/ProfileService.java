@@ -8,6 +8,8 @@ import dev.whitechoke.userService.utils.ProfileValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,6 +26,7 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ProfileValidator validator;
     private final ProfileMapper mapper;
+    private final GeometryFactory geometryFactory;
 
     @Transactional
     @CachePut(value = "profile", key = "#result.id")
@@ -33,6 +36,9 @@ public class ProfileService {
        validator.validate(request);
        var entity = mapper.toProfileEntity(request);
 
+       var coordinates = geometryFactory.createPoint(new Coordinate(request.longitude(), request.latitude()));
+
+       entity.setCoordinates(coordinates);
        entity.setRegisteredAt(Instant.now());
        var saved = profileRepository.save(entity);
 
