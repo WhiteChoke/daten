@@ -36,11 +36,13 @@ public class ProfileService {
     public ProfileResponseDto createProfile(
             ProfileCreateRequestDto request
     ) {
-       validator.validate(request);
+       validator.validateCreateRequest(request);
        var entity = mapper.toProfileEntity(request);
 
        entity.setRegisteredAt(Instant.now());
        var saved = profileRepository.save(entity);
+
+       // TODO: Send Kafka event for create deck
 
        log.info("Created profile with id={}", saved.getId());
        return mapper.toResponseDto(saved);
