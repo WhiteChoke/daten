@@ -18,5 +18,5 @@ public record ProfileResponseDto(
         Double longitude,
         Instant registeredAt,
         String bio
-) implements ProfileDto{
+) {
 }

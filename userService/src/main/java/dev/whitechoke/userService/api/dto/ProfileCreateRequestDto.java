@@ -15,5 +15,5 @@ public record ProfileCreateRequestDto(
         Double latitude,
         Double longitude,
         String bio
-) implements ProfileDto{
+) {
 }
