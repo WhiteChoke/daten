@@ -36,9 +36,6 @@ public class ProfileService {
        validator.validate(request);
        var entity = mapper.toProfileEntity(request);
 
-       var coordinates = geometryFactory.createPoint(new Coordinate(request.longitude(), request.latitude()));
-
-       entity.setCoordinates(coordinates);
        entity.setRegisteredAt(Instant.now());
        var saved = profileRepository.save(entity);
 
