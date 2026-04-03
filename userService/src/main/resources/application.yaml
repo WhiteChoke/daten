@@ -19,3 +19,5 @@ spring:
     type: redis
 server:
   port: 8080
+
+profile-created-topic: deck.event

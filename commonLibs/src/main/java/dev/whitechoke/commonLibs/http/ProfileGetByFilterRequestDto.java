@@ -9,7 +9,7 @@ public record ProfileGetByFilterRequestDto(
         Double longitude,
         Short maxAge,
         Short minAge,
-        Double radius,
+        Double searchRadius,
         Gender gender
 ) {
 }

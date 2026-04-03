@@ -1,5 +1,6 @@
 package dev.whitechoke.userService.domain.db;
 
+import dev.whitechoke.commonLibs.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -63,4 +64,7 @@ public class ProfileEntity {
 
     @Column(name = "is_active")
     private boolean isActive = true;
+
+    @Column(name = "search_radius")
+    private Double searchRadius;
 }

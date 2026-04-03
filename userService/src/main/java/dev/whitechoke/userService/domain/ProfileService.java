@@ -1,5 +1,6 @@
 package dev.whitechoke.userService.domain;
 
+import dev.whitechoke.commonLibs.kafka.ProfileCreatedEvent;
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
 import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
 import dev.whitechoke.userService.api.dto.ProfileResponseDto;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,7 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ProfileValidator validator;
     private final ProfileMapper mapper;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     @CachePut(value = "profile", key = "#result.id")
@@ -39,7 +42,17 @@ public class ProfileService {
        entity.setRegisteredAt(Instant.now());
        var saved = profileRepository.save(entity);
 
-       // TODO: Send Kafka event for create deck
+       var event = ProfileCreatedEvent.builder()
+               .telegramId(saved.getTelegramId())
+               .latitude(saved.getCoordinates().getX())
+               .longitude(saved.getCoordinates().getY())
+               .maxAge(saved.getMaxAge())
+               .minAge(saved.getMinAge())
+               .radius(saved.getSearchRadius())
+               .gender(saved.getSearchGender())
+               .build();
+
+        eventPublisher.publishEvent(event);
 
        log.info("Created profile with id={}", saved.getId());
        return mapper.toResponseDto(saved);
@@ -59,7 +72,7 @@ public class ProfileService {
         return  profileRepository.findProfilesByFilter(
                 request.latitude(),
                 request.longitude(),
-                request.radius(),
+                request.searchRadius(),
                 request.maxAge(),
                 request.minAge(),
                 request.gender()
