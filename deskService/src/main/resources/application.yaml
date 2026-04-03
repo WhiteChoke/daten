@@ -21,3 +21,5 @@ server:
 
 http-url:
   profile-service: http://localhost:8080
+
+profile-created-topic: deck.event
