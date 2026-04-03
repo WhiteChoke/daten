@@ -29,5 +29,5 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
                                              @Param("radiusInMeters") Double radius,
                                              @Param("maxAge") Short maxAge,
                                              @Param("minAge") Short minAge,
-                                             @Param("gender") Gender gender);
+                                             @Param("gender") http.Gender gender);
 }

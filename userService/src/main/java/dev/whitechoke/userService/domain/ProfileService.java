@@ -1,7 +1,7 @@
 package dev.whitechoke.userService.domain;
 
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
-import dev.whitechoke.userService.api.dto.ProfileGetByFilterRequestDto;
+import http.ProfileGetByFilterRequestDto;
 import dev.whitechoke.userService.api.dto.ProfileResponseDto;
 import dev.whitechoke.userService.domain.db.ProfileRepository;
 import dev.whitechoke.userService.utils.ProfileMapper;
@@ -10,9 +10,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.catalina.webresources.Cache;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

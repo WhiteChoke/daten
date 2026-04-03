@@ -13,6 +13,7 @@ java {
 }
 
 dependencies {
+    implementation(project(":commonLibs"))
     implementation("com.graphhopper.external:jackson-datatype-jts:2.21.0")
     implementation("org.locationtech.jts:jts-core:1.20.0")
     implementation("org.hibernate.orm:hibernate-spatial:7.3.0.Final")

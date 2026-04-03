@@ -46,11 +46,11 @@ public class ProfileEntity {
 
     @Column(name = "gender")
     @Enumerated(value = EnumType.STRING)
-    private Gender gender;
+    private http.Gender gender;
 
     @Column(name = "search_gender")
     @Enumerated(value = EnumType.STRING)
-    private Gender searchGender;
+    private http.Gender searchGender;
 
     @Column(name = "coordinates", columnDefinition = "geography")
     private Point coordinates;

@@ -1,7 +1,7 @@
 package dev.whitechoke.userService.api;
 
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
-import dev.whitechoke.userService.api.dto.ProfileGetByFilterRequestDto;
+import http.ProfileGetByFilterRequestDto;
 import dev.whitechoke.userService.api.dto.ProfileResponseDto;
 import dev.whitechoke.userService.domain.ProfileService;
 import lombok.RequiredArgsConstructor;

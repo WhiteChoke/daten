@@ -1,6 +1,5 @@
-package dev.whitechoke.userService.api.dto;
+package http;
 
-import dev.whitechoke.userService.domain.db.Gender;
 import lombok.Builder;
 
 @Builder

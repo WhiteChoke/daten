@@ -1,6 +1,6 @@
 package dev.whitechoke.userService.api.dto;
 
-import dev.whitechoke.userService.domain.db.Gender;
+import http.Gender;
 
 import java.time.LocalDate;
 
