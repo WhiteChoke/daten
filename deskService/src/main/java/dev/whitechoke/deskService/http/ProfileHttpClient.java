@@ -1,6 +1,6 @@
 package dev.whitechoke.deskService.http;
 
-import http.ProfileGetByFilterRequestDto;
+import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;

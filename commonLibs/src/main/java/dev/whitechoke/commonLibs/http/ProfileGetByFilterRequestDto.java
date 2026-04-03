@@ -1,5 +1,6 @@
-package http;
+package dev.whitechoke.commonLibs.http;
 
+import dev.whitechoke.commonLibs.Gender;
 import lombok.Builder;
 
 @Builder

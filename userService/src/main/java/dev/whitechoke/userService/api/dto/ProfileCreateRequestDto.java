@@ -1,7 +1,5 @@
 package dev.whitechoke.userService.api.dto;
 
-import http.Gender;
-
 import java.time.LocalDate;
 
 public record ProfileCreateRequestDto(

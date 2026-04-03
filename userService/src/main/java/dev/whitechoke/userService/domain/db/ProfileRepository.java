@@ -1,5 +1,7 @@
 package dev.whitechoke.userService.domain.db;
 
+
+import dev.whitechoke.commonLibs.Gender;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,5 +31,5 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
                                              @Param("radiusInMeters") Double radius,
                                              @Param("maxAge") Short maxAge,
                                              @Param("minAge") Short minAge,
-                                             @Param("gender") http.Gender gender);
+                                             @Param("gender") Gender gender);
 }

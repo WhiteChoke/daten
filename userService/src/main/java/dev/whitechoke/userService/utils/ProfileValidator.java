@@ -30,7 +30,7 @@ public class ProfileValidator {
             throw new IllegalArgumentException("The latitude cant be null");
         }
         if (dto.name() == null || dto.name().isBlank()) {
-            throw new IllegalArgumentException("The Gender cant be empty");
+            throw new IllegalArgumentException("The dev.whitechoke.commonLibs.Gender cant be empty");
         }
         if (dto.minAge() == null || dto.maxAge() == null) {
             throw new IllegalArgumentException("TThe age filter cannot be null");

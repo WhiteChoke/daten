@@ -1,7 +1,7 @@
 package dev.whitechoke.userService.domain;
 
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
-import http.ProfileGetByFilterRequestDto;
+import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
 import dev.whitechoke.userService.api.dto.ProfileResponseDto;
 import dev.whitechoke.userService.domain.db.ProfileRepository;
 import dev.whitechoke.userService.utils.ProfileMapper;
