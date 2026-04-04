@@ -1,5 +1,6 @@
 package dev.whitechoke.userService.domain;
 
+import dev.whitechoke.commonLibs.http.FormResponseDto;
 import dev.whitechoke.commonLibs.http.UserPreferencesResponseDto;
 import dev.whitechoke.commonLibs.kafka.ProfileCreatedEvent;
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
@@ -103,6 +104,20 @@ public class ProfileService {
                 .minAge(profile.getMinAge())
                 .searchGender(profile.getSearchGender())
                 .searchRadius(profile.getSearchRadius())
+                .build();
+    }
+
+    public FormResponseDto getForm(Long id) {
+        var profile = profileRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Not found entity with id=" + id));
+
+        return FormResponseDto.builder()
+                .id(profile.getId())
+                .telegramId(profile.getTelegramId())
+                .name(profile.getName())
+                .birthday(profile.getBirthday())
+                .gender(profile.getGender())
+                .bio(profile.getBio())
                 .build();
     }
 }

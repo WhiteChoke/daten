@@ -1,6 +1,7 @@
 package dev.whitechoke.userService.api;
 
 import dev.whitechoke.commonLibs.Gender;
+import dev.whitechoke.commonLibs.http.FormResponseDto;
 import dev.whitechoke.commonLibs.http.UserPreferencesResponseDto;
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
 import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
@@ -47,6 +48,17 @@ public class ProfileController {
             @PathVariable Long telegramId
     ) {
         var response = service.getUserPreferences(telegramId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
+    }
+
+    @GetMapping("form/{id}")
+    public ResponseEntity<FormResponseDto> getForm(
+            @PathVariable Long id
+    ) {
+        var response = service.getForm(id);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
