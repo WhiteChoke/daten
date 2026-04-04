@@ -26,7 +26,7 @@ public class DeckCreator {
             topics = "${profile-created-topic}",
             containerFactory = "profileCreatedEventListenerContainerFactory"
     )
-    public void profileCreatedEventListener(ProfileCreatedEvent event) {
+    private void profileCreatedEventListener(ProfileCreatedEvent event) {
         var ids = profileHttpClient.getProfileIds(
                 event.latitude(),
                 event.longitude(),
@@ -38,7 +38,22 @@ public class DeckCreator {
         createDeck(event.telegramId(), ids);
     }
 
-    public void createDeck(
+    public void updateDeck(Long telegramId) {
+
+        var preferences = profileHttpClient.getUserPreferences(telegramId);
+        var ids = profileHttpClient.getProfileIds(
+                preferences.latitude(),
+                preferences.longitude(),
+                preferences.maxAge(),
+                preferences.minAge(),
+                preferences.searchRadius(),
+                preferences.gender()
+        );
+
+        createDeck(telegramId, ids);
+    }
+
+    private void createDeck(
             Long telegramId,
             List<Long> ids
     ) {
@@ -46,7 +61,6 @@ public class DeckCreator {
         log.info(key);
         for (var id : ids){
             redisTemplate.opsForSet().add(key, id);
-
         }
     }
 }
