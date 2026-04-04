@@ -18,7 +18,7 @@ import java.util.Map;
 public class KafkaConfig {
 
     @Bean
-    public DefaultKafkaProducerFactory<Long, ProfileCreatedEvent> profileCreatedEventProducer(
+    public DefaultKafkaProducerFactory<Long, ?> profileCreatedEventProducer(
             KafkaProperties properties
     ) {
         Map<String, Object> producerProps = properties.buildProducerProperties();
@@ -28,8 +28,8 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<Long, ProfileCreatedEvent> profileCreatedEventKafkaTemplate (
-            DefaultKafkaProducerFactory<Long, ProfileCreatedEvent> producerFactory
+    public KafkaTemplate<Long, ?> profileCreatedEventKafkaTemplate (
+            DefaultKafkaProducerFactory<Long, ?> producerFactory
     ) {
         return new KafkaTemplate<>(producerFactory);
     }

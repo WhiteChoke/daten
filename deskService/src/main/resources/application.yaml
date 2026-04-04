@@ -26,5 +26,6 @@ server:
 http-url:
   profile-service: http://localhost:8080
 
-profile-created-topic: deck.event
+profile-created-topic: deck.event.created
+profile-deactivate-topic: deck.event.deactivated
 redis-deck-prefix: "deck::"

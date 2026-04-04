@@ -10,6 +10,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
@@ -20,22 +21,9 @@ public class DeckCreator {
     private final RedisTemplate<String, Long> redisTemplate;
     @Value("${redis-deck-prefix}")
     private String deckPrefix;
+    private final int ttl = 12;
 
-    @KafkaListener(
-            topics = "${profile-created-topic}",
-            containerFactory = "profileCreatedEventListenerContainerFactory"
-    )
-    private void profileCreatedEventListener(ProfileCreatedEvent event) {
-        var ids = profileHttpClient.getProfileIds(
-                event.latitude(),
-                event.longitude(),
-                event.maxAge(),
-                event.minAge(),
-                event.radius(),
-                event.gender()
-        );
-        createDeck(event.telegramId(), ids);
-    }
+
 
     public void updateDeck(Long telegramId) {
 
@@ -52,7 +40,7 @@ public class DeckCreator {
         createDeck(telegramId, ids);
     }
 
-    private void createDeck(
+    public void createDeck(
             Long telegramId,
             List<Long> ids
     ) {
@@ -60,6 +48,12 @@ public class DeckCreator {
         log.info(key);
         for (var id : ids){
             redisTemplate.opsForSet().add(key, id);
+            redisTemplate.expire(key, ttl, TimeUnit.HOURS);
         }
+    }
+
+    public void clearDeck(Long telegramId) {
+        var key = deckPrefix + telegramId;
+        redisTemplate.delete(key);
     }
 }

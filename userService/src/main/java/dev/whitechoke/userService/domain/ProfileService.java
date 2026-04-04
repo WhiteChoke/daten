@@ -3,6 +3,7 @@ package dev.whitechoke.userService.domain;
 import dev.whitechoke.commonLibs.http.FormResponseDto;
 import dev.whitechoke.commonLibs.http.UserPreferencesResponseDto;
 import dev.whitechoke.commonLibs.kafka.ProfileCreatedEvent;
+import dev.whitechoke.commonLibs.kafka.ProfileDeactivateEvent;
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
 import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
 import dev.whitechoke.commonLibs.http.ProfileResponseDto;
@@ -89,6 +90,13 @@ public class ProfileService {
                 .orElseThrow(() -> new EntityNotFoundException("Not found entity with telegram id=" + telegramId));
 
         profileRepository.delete(entity);
+        
+        var event = ProfileDeactivateEvent.builder()
+                .id(entity.getId())
+                .telegramId(entity.getTelegramId())
+                .build();
+        
+        eventPublisher.publishEvent(event);
 
         return entity.getId();
     }
