@@ -1,7 +1,7 @@
 package dev.whitechoke.deskService.http;
 
-import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
-import org.springframework.web.bind.annotation.RequestBody;
+import dev.whitechoke.commonLibs.Gender;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 
@@ -14,5 +14,12 @@ import java.util.List;
 )
 public interface ProfileHttpClient {
     @GetExchange
-    List<Long> getProfileIds(@RequestBody ProfileGetByFilterRequestDto request);
+    List<Long> getProfileIds(
+            @RequestParam("latitude") Double latitude,
+            @RequestParam("longitude") Double longitude,
+            @RequestParam("maxAge") Short maxAge,
+            @RequestParam("minAge") Short minAge,
+            @RequestParam("searchRadius") Double searchRadius,
+            @RequestParam("gender") Gender gender
+    );
 }

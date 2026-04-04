@@ -1,5 +1,7 @@
 package dev.whitechoke.userService.api.dto;
 
+import dev.whitechoke.commonLibs.Gender;
+
 import java.time.LocalDate;
 
 public record ProfileCreateRequestDto(
@@ -12,6 +14,7 @@ public record ProfileCreateRequestDto(
         Gender searchGender,
         Double latitude,
         Double longitude,
-        String bio
+        String bio,
+        Double searchRadius
 ) {
 }

@@ -44,8 +44,8 @@ public class ProfileService {
 
        var event = ProfileCreatedEvent.builder()
                .telegramId(saved.getTelegramId())
-               .latitude(saved.getCoordinates().getX())
-               .longitude(saved.getCoordinates().getY())
+               .latitude(saved.getCoordinates().getY())
+               .longitude(saved.getCoordinates().getX())
                .maxAge(saved.getMaxAge())
                .minAge(saved.getMinAge())
                .radius(saved.getSearchRadius())
@@ -69,6 +69,7 @@ public class ProfileService {
     public List<Long> getProfilesByFilter(
             ProfileGetByFilterRequestDto request
     ) {
+        log.info(request.toString());
         return  profileRepository.findProfilesByFilter(
                 request.latitude(),
                 request.longitude(),

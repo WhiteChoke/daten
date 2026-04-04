@@ -1,5 +1,7 @@
 package dev.whitechoke.userService.api.dto;
 
+import dev.whitechoke.commonLibs.Gender;
+
 import java.time.Instant;
 import java.time.LocalDate;
 

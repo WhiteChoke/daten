@@ -16,6 +16,10 @@ spring:
       port: 6379
   cache:
     type: redis
+  kafka:
+    consumer:
+      group-id: desk-service-group
+    bootstrap-servers: localhost:9092
 server:
   port: 8083
 
@@ -23,3 +27,4 @@ http-url:
   profile-service: http://localhost:8080
 
 profile-created-topic: deck.event
+redis-deck-prefix: "deck::"

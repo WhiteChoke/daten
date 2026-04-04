@@ -1,5 +1,6 @@
 package dev.whitechoke.userService.api;
 
+import dev.whitechoke.commonLibs.Gender;
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
 import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
 import dev.whitechoke.userService.api.dto.ProfileResponseDto;
@@ -42,8 +43,21 @@ public class ProfileController {
 
     @GetMapping
     public ResponseEntity<List<Long>> getProfileIdsByFilter(
-            @RequestBody ProfileGetByFilterRequestDto request
+            @RequestParam Double latitude,
+            @RequestParam Double longitude,
+            @RequestParam Short maxAge,
+            @RequestParam Short minAge,
+            @RequestParam Double searchRadius,
+            @RequestParam Gender gender
     ) {
+        var request = new ProfileGetByFilterRequestDto(
+                latitude,
+                longitude,
+                maxAge,
+                minAge,
+                searchRadius,
+                gender
+        );
         var response = service.getProfilesByFilter(request);
 
         return ResponseEntity
