@@ -2,7 +2,6 @@ package dev.whitechoke.deskService.domain;
 
 import dev.whitechoke.commonLibs.kafka.ProfileCreatedEvent;
 import dev.whitechoke.deskService.http.ProfileHttpClient;
-import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,7 +46,7 @@ public class DeckCreator {
                 preferences.maxAge(),
                 preferences.minAge(),
                 preferences.searchRadius(),
-                preferences.gender()
+                preferences.searchGender()
         );
 
         createDeck(telegramId, ids);

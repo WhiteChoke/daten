@@ -17,7 +17,7 @@ public class DeckService {
     @Value("${redis-deck-prefix}")
     private String deckPrefix;
 
-    private final FormResponseDto getForm(Long telegramId) {
+    public FormResponseDto getForm(Long telegramId) {
 
         var key = deckPrefix + telegramId;
 
@@ -25,7 +25,12 @@ public class DeckService {
             deckCreator.updateDeck(telegramId);
         }
 
-        Long profileId = redisTemplate.opsForSet().pop(key);
+        Object value = redisTemplate.opsForSet().pop(key);
+        Long profileId = null;
+
+        if (value instanceof Number) {
+            profileId = ((Number) value).longValue();
+        }
         return profileHttpClient.getForm(profileId);
     }
 }

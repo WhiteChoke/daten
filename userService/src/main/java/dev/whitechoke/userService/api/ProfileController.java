@@ -43,7 +43,7 @@ public class ProfileController {
                 .body(response);
     }
 
-    @GetMapping("{telegramId}")
+    @GetMapping("/preferences/{telegramId}")
     public ResponseEntity<UserPreferencesResponseDto> getUserPreferences(
             @PathVariable Long telegramId
     ) {
@@ -54,7 +54,7 @@ public class ProfileController {
                 .body(response);
     }
 
-    @GetMapping("form/{id}")
+    @GetMapping("/form/{id}")
     public ResponseEntity<FormResponseDto> getForm(
             @PathVariable Long id
     ) {
