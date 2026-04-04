@@ -1,6 +1,6 @@
 package dev.whitechoke.userService.config;
 
-import dev.whitechoke.userService.api.dto.ProfileResponseDto;
+import dev.whitechoke.commonLibs.http.ProfileResponseDto;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;

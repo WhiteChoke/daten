@@ -1,9 +1,8 @@
 package dev.whitechoke.userService.utils;
 
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
-import dev.whitechoke.userService.api.dto.ProfileResponseDto;
+import dev.whitechoke.commonLibs.http.ProfileResponseDto;
 import dev.whitechoke.userService.domain.db.ProfileEntity;
-import lombok.AllArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;

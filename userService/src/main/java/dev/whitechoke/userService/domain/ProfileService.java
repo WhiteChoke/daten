@@ -3,7 +3,7 @@ package dev.whitechoke.userService.domain;
 import dev.whitechoke.commonLibs.kafka.ProfileCreatedEvent;
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
 import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
-import dev.whitechoke.userService.api.dto.ProfileResponseDto;
+import dev.whitechoke.commonLibs.http.ProfileResponseDto;
 import dev.whitechoke.userService.domain.db.ProfileRepository;
 import dev.whitechoke.userService.utils.ProfileMapper;
 import dev.whitechoke.userService.utils.ProfileValidator;
@@ -89,5 +89,13 @@ public class ProfileService {
         profileRepository.delete(entity);
 
         return entity.getId();
+    }
+
+    @Cacheable(value = "profile", key = "#id")
+    public ProfileResponseDto getProfileByTelegramId(Long telegramId) {
+        var entity = profileRepository.findByTelegramId(telegramId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found entity with id=" + telegramId));
+
+        return mapper.toResponseDto(entity);
     }
 }

@@ -3,7 +3,7 @@ package dev.whitechoke.userService.api;
 import dev.whitechoke.commonLibs.Gender;
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
 import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
-import dev.whitechoke.userService.api.dto.ProfileResponseDto;
+import dev.whitechoke.commonLibs.http.ProfileResponseDto;
 import dev.whitechoke.userService.domain.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,6 +35,17 @@ public class ProfileController {
             @PathVariable Long id
     ) {
         var response = service.getProfileById(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ProfileResponseDto> getProfileByTelegramId(
+            @PathVariable Long telegramId
+    ) {
+        var response = service.getProfileByTelegramId(telegramId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

@@ -1,4 +1,4 @@
-package dev.whitechoke.userService.api.dto;
+package dev.whitechoke.commonLibs.http;
 
 import dev.whitechoke.commonLibs.Gender;
 
