@@ -1,6 +1,9 @@
 package dev.whitechoke.deskService.http;
 
 import dev.whitechoke.commonLibs.Gender;
+import dev.whitechoke.commonLibs.http.FormResponseDto;
+import dev.whitechoke.commonLibs.http.ProfileResponseDto;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
@@ -22,4 +25,10 @@ public interface ProfileHttpClient {
             @RequestParam("searchRadius") Double searchRadius,
             @RequestParam("gender") Gender gender
     );
+
+    @GetExchange(url = "{telegramId}")
+    ProfileResponseDto getUserPreferences(Long telegramId);
+
+    @GetExchange(url = "form/{profileId}")
+    FormResponseDto getForm(Long profileId);
 }
