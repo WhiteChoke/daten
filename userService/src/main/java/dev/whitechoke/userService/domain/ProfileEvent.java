@@ -32,16 +32,18 @@ public class ProfileEvent {
                 event.telegramId(),
                 event
         );
+        log.info("Sent created profile event with id={}", event.telegramId());
     }
     @TransactionalEventListener(
             phase = TransactionPhase.AFTER_COMMIT,
             classes = ProfileDeactivateEvent.class
     )
-    public void sendCreatedProfileEvent(ProfileDeactivateEvent event) {
+    public void sendDeactivateProfileEvent(ProfileDeactivateEvent event) {
         kafkaTemplate.send(
                 profileDeactivateTopic,
                 event.telegramId(),
                 event
         );
+        log.info("Sent deactivate profile event with id={}", event.telegramId());
     }
 }

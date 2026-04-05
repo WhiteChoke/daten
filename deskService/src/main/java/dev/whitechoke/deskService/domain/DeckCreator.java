@@ -1,12 +1,10 @@
 package dev.whitechoke.deskService.domain;
 
-import dev.whitechoke.commonLibs.kafka.ProfileCreatedEvent;
 import dev.whitechoke.deskService.http.ProfileHttpClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,8 +21,6 @@ public class DeckCreator {
     private String deckPrefix;
     private final int ttl = 12;
 
-
-
     public void updateDeck(Long telegramId) {
 
         var preferences = profileHttpClient.getUserPreferences(telegramId);
@@ -37,23 +33,26 @@ public class DeckCreator {
                 preferences.searchGender()
         );
 
-        createDeck(telegramId, ids);
+        var key = createDeck(telegramId, ids);
+        log.info("Updated deck with id={}", key);
     }
 
-    public void createDeck(
+    public String createDeck(
             Long telegramId,
             List<Long> ids
     ) {
         var key = deckPrefix + telegramId;
-        log.info(key);
         for (var id : ids){
             redisTemplate.opsForSet().add(key, id);
             redisTemplate.expire(key, ttl, TimeUnit.HOURS);
         }
+
+        return key;
     }
 
     public void clearDeck(Long telegramId) {
         var key = deckPrefix + telegramId;
         redisTemplate.delete(key);
+        log.info("The deck of the user with id={} was cleared", telegramId);
     }
 }

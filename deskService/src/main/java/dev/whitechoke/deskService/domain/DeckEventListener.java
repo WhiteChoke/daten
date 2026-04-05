@@ -4,9 +4,11 @@ import dev.whitechoke.commonLibs.kafka.ProfileCreatedEvent;
 import dev.whitechoke.commonLibs.kafka.ProfileDeactivateEvent;
 import dev.whitechoke.deskService.http.ProfileHttpClient;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DeckEventListener {
@@ -28,6 +30,7 @@ public class DeckEventListener {
                 event.gender()
         );
         deckCreator.createDeck(event.telegramId(), ids);
+        log.info("Created deck for user with telegram id={}", event.telegramId());
     }
 
     @KafkaListener(

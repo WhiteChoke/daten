@@ -72,7 +72,6 @@ public class ProfileService {
     public List<Long> getProfilesByFilter(
             ProfileGetByFilterRequestDto request
     ) {
-        log.info(request.toString());
         return  profileRepository.findProfilesByFilter(
                 request.latitude(),
                 request.longitude(),
@@ -97,6 +96,8 @@ public class ProfileService {
                 .build();
         
         eventPublisher.publishEvent(event);
+
+        log.info("Deactivated profile with telegram id={}", telegramId);
 
         return entity.getId();
     }
