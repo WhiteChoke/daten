@@ -12,3 +12,6 @@ spring:
     show-sql: true
 server:
   port: 8082
+
+http-url:
+  deck-service: http://localhost:8083
