@@ -13,19 +13,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "match")
 public class MatchEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
 
-    @Column(name = "first_user")
-    private Long firstUserTelegramId;
-
-    @Column(name = "second_user")
-    private Long secondUserTelegramId;
+    @EmbeddedId
+    private MatchId id;
 
     @Column(name = "first_answer")
     private Boolean firstAnswer;
 
     @Column(name = "second_answer")
     private Boolean secondAnswer;
+
+    public void setIds(Long id1, Long id2) {
+        this.id = new MatchId(id1, id2);
+    }
 }
