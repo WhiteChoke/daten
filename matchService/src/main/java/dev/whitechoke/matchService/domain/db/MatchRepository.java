@@ -13,7 +13,7 @@ public interface MatchRepository extends JpaRepository<MatchEntity, MatchId> {
     ON CONFLICT (first_user_id, second_user_id) 
     DO UPDATE SET second_answer = :isLiked 
     WHERE match.second_answer IS NULL
-    RETURNING (xmax = 0) AS is_new_record
+    RETURNING *
     """, nativeQuery = true)
-    boolean upsertMatch(Long firstId, Long secondId, Boolean isLiked);
+    MatchEntity upsertMatch(Long firstId, Long secondId, Boolean isLiked);
 }

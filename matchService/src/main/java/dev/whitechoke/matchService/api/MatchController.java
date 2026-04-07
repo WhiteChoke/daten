@@ -1,5 +1,6 @@
-package dev.whitechoke.matchService.domain.api;
+package dev.whitechoke.matchService.api;
 
+import dev.whitechoke.commonLibs.http.AnswerRequestDto;
 import dev.whitechoke.matchService.domain.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,13 +14,24 @@ public class MatchController {
 
     private final MatchService service;
 
-    @GetMapping
-    public ResponseEntity<Void> getMatch(
+    @PostMapping
+    public ResponseEntity<Void> create(
             @RequestParam Long senderId,
             @RequestParam Long partnerId,
             @RequestParam Boolean isLiked
     ) {
         service.createMatch(senderId, partnerId, isLiked);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> setAnswer(
+            @RequestBody AnswerRequestDto request
+    ) {
+        service.setAnswer(request);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
