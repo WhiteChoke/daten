@@ -15,3 +15,6 @@ server:
 
 http-url:
   deck-service: http://localhost:8083
+
+notification-like-topic: notification.event.like
+notification-match-topic: notification.event.match

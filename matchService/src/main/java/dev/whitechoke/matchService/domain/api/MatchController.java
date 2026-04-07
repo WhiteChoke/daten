@@ -1,14 +1,10 @@
 package dev.whitechoke.matchService.domain.api;
 
-import dev.whitechoke.commonLibs.http.FormResponseDto;
 import dev.whitechoke.matchService.domain.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,14 +13,16 @@ public class MatchController {
 
     private final MatchService service;
 
-    @GetMapping("{telegramId}")
-    public ResponseEntity<FormResponseDto> getMatch(
-            @PathVariable Long telegramId
+    @GetMapping
+    public ResponseEntity<Void> getMatch(
+            @RequestParam Long senderId,
+            @RequestParam Long partnerId,
+            @RequestParam Boolean isLiked
     ) {
-        var response = service.getMatch(telegramId);
+        service.createMatch(senderId, partnerId, isLiked);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(response);
+                .build();
     }
 }
