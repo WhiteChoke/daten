@@ -1,6 +1,7 @@
 package dev.whitechoke.matchService.domain;
 
 import dev.whitechoke.commonLibs.http.AnswerRequestDto;
+import dev.whitechoke.commonLibs.http.MatchCreateRequestDto;
 import dev.whitechoke.commonLibs.kafka.MatchNotificationEvent;
 import dev.whitechoke.matchService.domain.db.MatchId;
 import dev.whitechoke.matchService.domain.db.MatchRepository;
@@ -23,16 +24,21 @@ public class MatchService {
 
     @Value("${notification-match-topic}")
     private String notificationMatchTopic;
+    @Value("${notification-like-topic}")
+    private String notificationLikeTopic;
 
     @Transactional
-    public void createMatch(Long senderId, Long partnerId, Boolean isLiked) {
+    public void createMatch(MatchCreateRequestDto request) {
 
-        var id = new MatchId(senderId, partnerId);
+        var id = new MatchId(
+                request.senderId(),
+                request.partnerId()
+        );
 
         var entity = matchRepository.upsertMatch(
                 id.getFirstUserTelegramId(),
                 id.getSecondUserTelegramId(),
-                isLiked
+                request.isLiked()
         );
 
         if (entity.getSecondAnswer() != null) {
@@ -40,13 +46,14 @@ public class MatchService {
                     .equals(entity.getSecondAnswer())
             ) {
                 sendMatchEvent(
-                        senderId,
-                        partnerId
+                        request.senderId(),
+                        request.partnerId(),
+                        notificationMatchTopic
                 );
             }
             return;
         }
-        log.info("User with id={} liked user with id={}", senderId, partnerId);
+        log.info("User with id={} liked user with id={}", request.senderId(), request.partnerId());
     }
 
     @Transactional
@@ -58,20 +65,21 @@ public class MatchService {
         var match = matchRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Not found match with id=" + id));
 
-        match.setSecondAnswer(request.answer());
-
         if (match.getFirstAnswer()
                 .equals(match.getSecondAnswer())
         ) {
             sendMatchEvent(
                     request.senderId(),
-                    request.partnerId()
+                    request.partnerId(),
+                    notificationLikeTopic
             );
         }
     }
 
     private void sendMatchEvent(
-            Long senderId, Long partnerId
+            Long senderId,
+            Long partnerId,
+            String topic
     ) {
         var event = MatchNotificationEvent.builder()
                 .senderId(senderId)
@@ -79,7 +87,7 @@ public class MatchService {
                 .build();
 
         kafkaTemplate.send(
-                notificationMatchTopic,
+                topic,
                 senderId,
                 event);
 
