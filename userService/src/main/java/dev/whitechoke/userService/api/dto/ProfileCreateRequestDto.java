@@ -15,6 +15,7 @@ public record ProfileCreateRequestDto(
         Double latitude,
         Double longitude,
         String bio,
-        Double searchRadius
+        Double searchRadius,
+        String photoLink
 ) {
 }

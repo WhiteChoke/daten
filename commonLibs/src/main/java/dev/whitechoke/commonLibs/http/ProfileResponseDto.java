@@ -18,6 +18,7 @@ public record ProfileResponseDto(
         Double longitude,
         Instant registeredAt,
         String bio,
-        Double searchRadius
+        Double searchRadius,
+        String photoLink
 ) {
 }

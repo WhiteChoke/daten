@@ -67,4 +67,7 @@ public class ProfileEntity {
 
     @Column(name = "search_radius")
     private Double searchRadius;
+
+    @Column(name = "photo_link")
+    private String photoLink;
 }
