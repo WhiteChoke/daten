@@ -1,12 +1,12 @@
 package dev.whitechoke.userService.domain;
 
-import dev.whitechoke.commonLibs.http.FormResponseDto;
-import dev.whitechoke.commonLibs.http.UserPreferencesResponseDto;
+import dev.whitechoke.commonLibs.http.profileDto.FormResponseDto;
+import dev.whitechoke.commonLibs.http.profileDto.UserPreferencesResponseDto;
 import dev.whitechoke.commonLibs.kafka.ProfileCreatedEvent;
 import dev.whitechoke.commonLibs.kafka.ProfileDeactivateEvent;
 import dev.whitechoke.userService.api.dto.ProfileCreateRequestDto;
-import dev.whitechoke.commonLibs.http.ProfileGetByFilterRequestDto;
-import dev.whitechoke.commonLibs.http.ProfileResponseDto;
+import dev.whitechoke.commonLibs.http.profileDto.ProfileGetByFilterRequestDto;
+import dev.whitechoke.commonLibs.http.profileDto.ProfileResponseDto;
 import dev.whitechoke.userService.domain.db.ProfileRepository;
 import dev.whitechoke.userService.utils.ProfileMapper;
 import dev.whitechoke.userService.utils.ProfileValidator;

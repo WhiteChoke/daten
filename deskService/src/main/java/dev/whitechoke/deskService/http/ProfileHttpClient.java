@@ -1,9 +1,8 @@
 package dev.whitechoke.deskService.http;
 
 import dev.whitechoke.commonLibs.Gender;
-import dev.whitechoke.commonLibs.http.FormResponseDto;
-import dev.whitechoke.commonLibs.http.ProfileResponseDto;
-import dev.whitechoke.commonLibs.http.UserPreferencesResponseDto;
+import dev.whitechoke.commonLibs.http.profileDto.FormResponseDto;
+import dev.whitechoke.commonLibs.http.profileDto.UserPreferencesResponseDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;

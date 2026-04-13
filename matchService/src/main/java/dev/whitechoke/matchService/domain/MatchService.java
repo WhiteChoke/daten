@@ -1,7 +1,7 @@
 package dev.whitechoke.matchService.domain;
 
-import dev.whitechoke.commonLibs.http.AnswerRequestDto;
-import dev.whitechoke.commonLibs.http.MatchCreateRequestDto;
+import dev.whitechoke.commonLibs.http.matchDto.AnswerRequestDto;
+import dev.whitechoke.commonLibs.http.matchDto.MatchCreateRequestDto;
 import dev.whitechoke.commonLibs.kafka.MatchNotificationEvent;
 import dev.whitechoke.matchService.domain.db.MatchId;
 import dev.whitechoke.matchService.domain.db.MatchRepository;

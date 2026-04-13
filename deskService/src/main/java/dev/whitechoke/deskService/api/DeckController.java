@@ -1,6 +1,6 @@
 package dev.whitechoke.deskService.api;
 
-import dev.whitechoke.commonLibs.http.FormResponseDto;
+import dev.whitechoke.commonLibs.http.profileDto.FormResponseDto;
 import dev.whitechoke.deskService.domain.DeckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
