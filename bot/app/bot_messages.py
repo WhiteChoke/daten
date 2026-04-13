@@ -70,3 +70,7 @@ enter_photo_link = (
 long_message_error = (
     "<b>Слишком длинное сообщение!</b>"
 )
+
+number_error = (
+    "<b>ватафа, брат, ну введи число пж</b>"
+)

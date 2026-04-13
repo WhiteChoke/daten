@@ -1,14 +1,19 @@
 import requests
 
-async def create_profile(tgId,request):
-    body = {
+genders = {
+    "Мужчина": "MALE",
+    "Женщина": "FEMALE"
+}
+
+def create_profile(tgId,request):
+    request_body = {
         "telegramId": tgId,
         "name": request["name"],
         "birthday": request["birthday"],
         "maxAge": request["maxAge"],
         "minAge": request["minAge"],
-        "gender": request["gender"],
-        "searchGender": request["searchGender"],
+        "gender": genders[request["gender"]],
+        "searchGender": genders[request["searchGender"]],
         "latitude": request["coordinates"]["latitude"],
         "longitude": request["coordinates"]["longitude"],
         "bio": request["bio"],
@@ -16,3 +21,7 @@ async def create_profile(tgId,request):
         "photoLink": request["photoLink"],
     }
     
+    response = requests.post(url="http://localhost:8080/api/v1/profiles", 
+                                    json=request_body
+                                )
+    print(response.text)
