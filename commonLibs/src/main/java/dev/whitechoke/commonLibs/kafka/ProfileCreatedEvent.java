@@ -5,6 +5,7 @@ import lombok.Builder;
 
 @Builder
 public record ProfileCreatedEvent(
+        Long UserId,
         Long telegramId,
         Double latitude,
         Double longitude,

@@ -46,6 +46,7 @@ public class ProfileService {
        var saved = profileRepository.save(entity);
 
        var event = ProfileCreatedEvent.builder()
+               .UserId(saved.getId())
                .telegramId(saved.getTelegramId())
                .latitude(saved.getCoordinates().getY())
                .longitude(saved.getCoordinates().getX())
@@ -107,6 +108,7 @@ public class ProfileService {
                 .orElseThrow(() -> new EntityNotFoundException("Not found entity with id=" + telegramId));
 
         return UserPreferencesResponseDto.builder()
+                .userId(profile.getId())
                 .latitude(profile.getCoordinates().getY())
                 .longitude(profile.getCoordinates().getX())
                 .maxAge(profile.getMaxAge())

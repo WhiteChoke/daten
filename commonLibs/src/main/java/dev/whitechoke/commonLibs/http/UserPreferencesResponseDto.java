@@ -5,6 +5,7 @@ import lombok.Builder;
 
 @Builder
 public record UserPreferencesResponseDto(
+        Long userId,
         Short maxAge,
         Short minAge,
         Gender searchGender,
