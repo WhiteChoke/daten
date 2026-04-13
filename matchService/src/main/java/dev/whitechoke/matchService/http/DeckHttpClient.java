@@ -1,6 +1,6 @@
 package dev.whitechoke.matchService.http;
 
-import dev.whitechoke.commonLibs.http.FormResponseDto;
+import dev.whitechoke.commonLibs.http.profileDto.FormResponseDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;

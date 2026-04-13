@@ -1,6 +1,6 @@
 package dev.whitechoke.deskService.domain;
 
-import dev.whitechoke.commonLibs.http.FormResponseDto;
+import dev.whitechoke.commonLibs.http.profileDto.FormResponseDto;
 import dev.whitechoke.deskService.http.ProfileHttpClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

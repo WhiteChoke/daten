@@ -1,4 +1,4 @@
-package dev.whitechoke.commonLibs.http;
+package dev.whitechoke.commonLibs.http.profileDto;
 
 import dev.whitechoke.commonLibs.Gender;
 

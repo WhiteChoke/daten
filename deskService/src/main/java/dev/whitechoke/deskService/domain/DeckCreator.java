@@ -33,6 +33,8 @@ public class DeckCreator {
                 preferences.searchGender()
         );
 
+        ids.remove(preferences.userId());
+
         var key = createDeck(telegramId, ids);
         log.info("Updated deck with id={}", key);
     }

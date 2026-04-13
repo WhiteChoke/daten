@@ -29,6 +29,9 @@ public class DeckEventListener {
                 event.radius(),
                 event.gender()
         );
+
+        ids.remove(event.UserId());
+
         deckCreator.createDeck(event.telegramId(), ids);
         log.info("Created deck for user with telegram id={}", event.telegramId());
     }
