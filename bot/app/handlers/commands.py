@@ -13,3 +13,6 @@ async def cmd_start(message: Message):
                          parse_mode="HTML", 
                          reply_markup=register_kd.start
                          )
+    
+
+    
