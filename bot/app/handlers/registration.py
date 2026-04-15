@@ -6,7 +6,8 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
 
 import app.bot_messages as messages
-import app.keyboards.register as kb
+import app.keyboards.register_kb as kb
+from app.keyboards import main_kb
 from app.api.profile import create_profile
 
 router = Router()
@@ -147,7 +148,7 @@ async def enter_search_gender(message: Message, state: FSMContext):
     await state.update_data(searchGender=message.text)
     data = await state.get_data()
     create_profile(message.from_user.id, data)
-    await message.answer_photo(photo=data["photoLink"])
+    await message.answer_photo(photo=data["photoLink"], reply_markup=main_kb.main)
     await state.clear()
 
     

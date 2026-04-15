@@ -14,14 +14,14 @@ async def start_match(message: Message):
     
     response = deck.get_form(message.from_user.id)
     
-    birthday = datetime.strptime(response["birthday"], "%Y-%m-%d")
-    age = relativedelta(datetime.today(), birthday).years
+    value = datetime.fromisoformat(response["birthday"])
+    # birthday = datetime.strptime(response["birthday"], "%Y-%m-%d")
+    age = relativedelta(datetime.today(), value).years
     
     print(response)
     
-    # await message.answer_photo(
-    #     photo=response["photoLink"],
-    #     caption=f"{response["name"]}, {age}\n\n {response["bio"]}"
-    # )
+    await message.answer_photo(
+        photo=response["photoLink"],
+        caption=f"{response["name"]}, {age}\n\n {response["bio"]}"
+    )
     
-    await message.answer(f"{response["name"]}, {age}\n\n {response["bio"]}")
