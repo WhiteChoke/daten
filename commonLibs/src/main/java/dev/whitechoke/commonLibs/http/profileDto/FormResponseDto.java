@@ -12,6 +12,7 @@ public record FormResponseDto(
         String name,
         LocalDate birthday,
         Gender gender,
-        String bio
+        String bio,
+        String photoLink
 ) {
 }

@@ -126,6 +126,7 @@ public class ProfileService {
                 .id(profile.getId())
                 .telegramId(profile.getTelegramId())
                 .name(profile.getName())
+                .photoLink(profile.getPhotoLink())
                 .birthday(profile.getBirthday())
                 .gender(profile.getGender())
                 .bio(profile.getBio())

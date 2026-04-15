@@ -19,7 +19,7 @@ public class DeckCreator {
     private final RedisTemplate<String, Long> redisTemplate;
     @Value("${redis-deck-prefix}")
     private String deckPrefix;
-    private final int ttl = 12;
+    private final long ttl = 12;
 
     public void updateDeck(Long telegramId) {
 
@@ -45,8 +45,7 @@ public class DeckCreator {
     ) {
         var key = deckPrefix + telegramId;
         for (var id : ids){
-            redisTemplate.opsForSet().add(key, id);
-            redisTemplate.expire(key, ttl, TimeUnit.HOURS);
+            redisTemplate.opsForList().leftPop(key+id, ttl, TimeUnit.HOURS);
         }
 
         return key;

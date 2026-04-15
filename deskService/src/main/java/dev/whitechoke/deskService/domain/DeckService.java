@@ -25,7 +25,7 @@ public class DeckService {
             deckCreator.updateDeck(telegramId);
         }
 
-        Object value = redisTemplate.opsForSet().pop(key);
+        Object value = redisTemplate.opsForList().rightPop(key);
         Long profileId = null;
 
         if (value instanceof Number) {
