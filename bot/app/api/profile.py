@@ -7,9 +7,9 @@ genders = {
 
 servise_url = "http://localhost:8080/api/v1/profiles"
 
-def create_profile(tgId,request):
+def create_profile(tg_id,request):
     request_body = {
-        "telegramId": tgId,
+        "telegramId": tg_id,
         "name": request["name"],
         "birthday": request["birthday"],
         "maxAge": request["maxAge"],
@@ -23,7 +23,6 @@ def create_profile(tgId,request):
         "photoLink": request["photoLink"],
     }
     
-    response = requests.post(url=servise_url, 
-                             json=request_body
-                            )
-    print(response.text)
+    requests.post(url=servise_url,   
+                json=request_body
+                )

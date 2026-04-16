@@ -4,7 +4,9 @@ import dev.whitechoke.deskService.http.ProfileHttpClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class DeckCreator {
     private final RedisTemplate<String, Long> redisTemplate;
     @Value("${redis-deck-prefix}")
     private String deckPrefix;
-    private final long ttl = 12;
+    private final int ttl = 12;
 
     public void updateDeck(Long telegramId) {
 
@@ -44,9 +46,9 @@ public class DeckCreator {
             List<Long> ids
     ) {
         var key = deckPrefix + telegramId;
-        for (var id : ids){
-            redisTemplate.opsForList().leftPop(key+id, ttl, TimeUnit.HOURS);
-        }
+
+        redisTemplate.opsForList().rightPushAll(key, ids);
+        redisTemplate.expire(key, ttl, TimeUnit.HOURS);
 
         return key;
     }

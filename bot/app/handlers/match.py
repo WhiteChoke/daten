@@ -14,9 +14,8 @@ async def start_match(message: Message):
     
     response = deck.get_form(message.from_user.id)
     
-    value = datetime.fromisoformat(response["birthday"])
-    # birthday = datetime.strptime(response["birthday"], "%Y-%m-%d")
-    age = relativedelta(datetime.today(), value).years
+    birthday = datetime.fromisoformat(response["birthday"])
+    age = relativedelta(datetime.today(), birthday).years
     
     print(response)
     

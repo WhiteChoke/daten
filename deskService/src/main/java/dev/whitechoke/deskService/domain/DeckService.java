@@ -21,11 +21,11 @@ public class DeckService {
 
         var key = deckPrefix + telegramId;
 
-        if (redisTemplate.opsForSet().size(key) < 10) {
+        if (redisTemplate.opsForList().size(key) < 10) {
             deckCreator.updateDeck(telegramId);
         }
 
-        Object value = redisTemplate.opsForList().rightPop(key);
+        Object value = redisTemplate.opsForList().leftPop(key);
         Long profileId = null;
 
         if (value instanceof Number) {
