@@ -1,8 +1,11 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-match = InlineKeyboardMarkup(inline_keyboard=[
-    [
-        InlineKeyboardButton(text="❤️", callback_data="like"),
-        InlineKeyboardButton(text="👎", callback_data="dislike")
-    ]
-])
+async def create_match_kb(partner_id):
+    kb = InlineKeyboardBuilder()
+        
+    kb.add(InlineKeyboardButton(text="❤️", callback_data=f"create_match/{partner_id}/true"))
+    kb.add(InlineKeyboardButton(text="👎", callback_data=f"create_match/{partner_id}/false"))
+    
+    return kb.adjust(2).as_markup()
+
