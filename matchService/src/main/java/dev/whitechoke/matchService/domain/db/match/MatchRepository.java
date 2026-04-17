@@ -1,4 +1,4 @@
-package dev.whitechoke.matchService.domain.db;
+package dev.whitechoke.matchService.domain.db.match;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

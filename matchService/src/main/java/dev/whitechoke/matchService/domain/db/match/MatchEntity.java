@@ -1,4 +1,4 @@
-package dev.whitechoke.matchService.domain.db;
+package dev.whitechoke.matchService.domain.db.match;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
