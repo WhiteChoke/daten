@@ -3,14 +3,17 @@ package dev.whitechoke.matchService.domain;
 import dev.whitechoke.commonLibs.http.matchDto.AnswerRequestDto;
 import dev.whitechoke.commonLibs.http.matchDto.MatchCreateRequestDto;
 import dev.whitechoke.commonLibs.kafka.MatchNotificationEvent;
-import dev.whitechoke.matchService.domain.db.MatchId;
-import dev.whitechoke.matchService.domain.db.MatchRepository;
+import dev.whitechoke.matchService.domain.db.interaction.InteractionEntity;
+import dev.whitechoke.matchService.domain.db.interaction.InteractionRepository;
+import dev.whitechoke.matchService.domain.db.match.MatchEntity;
+import dev.whitechoke.matchService.domain.db.match.MatchId;
+import dev.whitechoke.matchService.domain.db.match.MatchRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,15 +23,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class MatchService {
 
     private final MatchRepository matchRepository;
-    private final KafkaTemplate<Long, Object> kafkaTemplate;
+    private final InteractionRepository interactionRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
-    @Value("${notification-match-topic}")
-    private String notificationMatchTopic;
     @Value("${notification-like-topic}")
     private String notificationLikeTopic;
 
     @Transactional
     public void createMatch(MatchCreateRequestDto request) {
+
+        var isInteracted = interactionRepository.existsByUserIdAndInteractedUserId(
+                request.senderId(),
+                request.partnerId()
+        );
+
+        if (isInteracted) {
+            return;
+        }
 
         var id = new MatchId(
                 request.senderId(),
@@ -41,18 +52,10 @@ public class MatchService {
                 request.isLiked()
         );
 
-        if (entity.getSecondAnswer() != null) {
-            if (entity.getFirstAnswer()
-                    .equals(entity.getSecondAnswer())
-            ) {
-                sendMatchEvent(
-                        request.senderId(),
-                        request.partnerId(),
-                        notificationMatchTopic
-                );
-            }
-            return;
-        }
+        interactionRepository.save(new InteractionEntity(request.senderId(), request.partnerId()));
+
+        sendNotification(entity);
+
         log.info("User with id={} liked user with id={}", request.senderId(), request.partnerId());
     }
 
@@ -65,33 +68,19 @@ public class MatchService {
         var match = matchRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Not found match with id=" + id));
 
-        if (match.getFirstAnswer()
-                .equals(match.getSecondAnswer())
+        sendNotification(match);
+    }
+
+    private void sendNotification(MatchEntity entity) {
+        if (Boolean.TRUE.equals(entity.getFirstAnswer()) &&
+                Boolean.TRUE.equals(entity.getSecondAnswer())
         ) {
-            sendMatchEvent(
-                    request.senderId(),
-                    request.partnerId(),
-                    notificationLikeTopic
-            );
+            var event = MatchNotificationEvent.builder()
+                    .partnerId(entity.getId().getFirstUserTelegramId())
+                    .senderId(entity.getId().getSecondUserTelegramId())
+                    .build();
+
+            eventPublisher.publishEvent(event);
         }
     }
-
-    private void sendMatchEvent(
-            Long senderId,
-            Long partnerId,
-            String topic
-    ) {
-        var event = MatchNotificationEvent.builder()
-                .senderId(senderId)
-                .partnerId(partnerId)
-                .build();
-
-        kafkaTemplate.send(
-                topic,
-                senderId,
-                event);
-
-        log.info("Users with ids {}--{} got match", senderId, partnerId);
-    }
-
 }
