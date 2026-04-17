@@ -26,3 +26,10 @@ def create_profile(tg_id,request):
     requests.post(url=servise_url,   
                 json=request_body
                 )
+    
+def get_profile(tg_id):
+    
+    return requests.get(f"{servise_url}/tg/{tg_id}")
+    
+    
+         

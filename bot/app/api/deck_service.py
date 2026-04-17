@@ -11,5 +11,4 @@ def get_form(tg_id):
         print(response.text)
         return
 
-    print(response.text)
     return response.json()

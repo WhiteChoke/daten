@@ -8,7 +8,7 @@ from aiogram.fsm.context import FSMContext
 import app.bot_messages as messages
 import app.keyboards.register_kb as kb
 from app.keyboards import main_kb
-from app.api.profile import create_profile
+from app.api.profile_service import create_profile
 
 router = Router()
 
