@@ -1,14 +1,8 @@
-import requests
-
+import aiohttp
 
 service_url = "http://localhost:8083/api/v1/decks"
 
-def get_form(tg_id):
-        
-    response = requests.get(url=f"{service_url}/{tg_id}")
-
-    if response.status_code != 200:
-        print(response.text)
-        return
-
-    return response.json()
+async def get_form(tg_id):
+    async with aiohttp.ClientSession() as session:
+        response = await session.get(url=f"{service_url}/{tg_id}")
+        return await response.json()

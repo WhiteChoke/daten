@@ -1,13 +1,15 @@
+import aiohttp
 import requests
+import asyncio
 
 genders = {
     "Мужчина": "MALE",
     "Женщина": "FEMALE"
 }
 
-servise_url = "http://localhost:8080/api/v1/profiles"
+service_url = "http://localhost:8080/api/v1/profiles"
 
-def create_profile(tg_id,request):
+async def create_profile(tg_id,request):
     request_body = {
         "telegramId": tg_id,
         "name": request["name"],
@@ -23,13 +25,14 @@ def create_profile(tg_id,request):
         "photoLink": request["photoLink"],
     }
     
-    requests.post(url=servise_url,   
-                json=request_body
-                )
+    async with aiohttp.ClientSession() as session:
+        await session.post(url=service_url, json=request_body)
+
+async def get_profile(tg_id):
+    async with aiohttp.ClientSession() as session:
+        response = await session.get(f"{service_url}/tg/{tg_id}")
+        await response.json()
+        
+        return response
     
-def get_profile(tg_id):
-    
-    return requests.get(f"{servise_url}/tg/{tg_id}")
-    
-    
-         
+print(asyncio.run(get_profile(1602200237)))
