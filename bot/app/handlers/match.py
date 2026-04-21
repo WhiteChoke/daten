@@ -10,7 +10,7 @@ from dateutil.relativedelta import relativedelta
 
 router = Router()
 
-@router.message(F.text == "Начать поиск")
+@router.message(F.text == "Начать поиск🔭")
 async def send_match(message: Message):
 
     

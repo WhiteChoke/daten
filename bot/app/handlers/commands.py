@@ -5,6 +5,7 @@ from aiogram.types import Message
 import app.bot_messages as messages
 import app.keyboards.register_kb as register_kd
 import app.keyboards.profile_kb as profile_kb
+import app.keyboards.main_kb as main_kb
 from app.api import profile_service
 
 router = Router()
@@ -21,6 +22,9 @@ async def cmd_start(message: Message):
                 await message.answer(messages.profile_disactivated,
                                      parse_mode="HTML",
                                      reply_markup=profile_kb.activate)
+            else:
+                await message.answer(text="Выберите опцию",
+                                     reply_markup=main_kb.main)
         case 404:
             await message.answer(messages.welcome,             
                                 parse_mode="HTML",  

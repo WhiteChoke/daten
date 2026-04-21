@@ -148,7 +148,11 @@ async def enter_search_gender(message: Message, state: FSMContext):
     await state.update_data(searchGender=message.text)
     data = await state.get_data()
     await create_profile(message.from_user.id, data)
-    await message.answer_photo(photo=data["photoLink"], reply_markup=main_kb.main)
+    await message.answer_photo(
+        photo=await state.get_data["photoLink"],
+        caption=f"{await state.get_data["name"]}, {await state.get_data["age"]}\n {await state.get_data["bio"]}",
+        reply_markup=main_kb.main)
+    
     await state.clear()
 
     
