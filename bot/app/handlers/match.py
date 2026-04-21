@@ -14,7 +14,7 @@ router = Router()
 async def send_match(message: Message):
 
     
-    response = deck_service.get_form(message.from_user.id)
+    response = await deck_service.get_form(message.from_user.id)
     
     birthday = datetime.fromisoformat(response["birthday"])
     age = relativedelta(datetime.today(), birthday).years
@@ -29,12 +29,11 @@ async def send_match(message: Message):
 async def match(callback: CallbackQuery):
     
     partner_id, answer = callback.data.split("/")[1:]
-    print(callback.data)
     
-    match_service.create_match(callback.from_user.id, partner_id, answer)
+    await match_service.create_match(callback.from_user.id, partner_id, answer)
     await callback.answer()
     
-    response = deck_service.get_form(callback.from_user.id)
+    response = await deck_service.get_form(callback.from_user.id)
     
     birthday = datetime.fromisoformat(response["birthday"])
     age = relativedelta(datetime.today(), birthday).years
