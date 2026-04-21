@@ -70,6 +70,14 @@ public class ProfileService {
         return mapper.toResponseDto(entity);
     }
 
+    @Cacheable(value = "profile", key = "#id")
+    public ProfileResponseDto getProfileByTelegramId(Long id) {
+        var entity = profileRepository.findByTelegramId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Not found entity with id=" + id));
+
+        return mapper.toResponseDto(entity);
+    }
+
     public List<Long> getProfilesByFilter(
             ProfileGetByFilterRequestDto request
     ) {

@@ -43,6 +43,17 @@ public class ProfileController {
                 .body(response);
     }
 
+    @GetMapping("/tg/{id}")
+    public ResponseEntity<ProfileResponseDto> getProfileByTelegramId(
+            @PathVariable Long id
+    ) {
+        var response = service.getProfileByTelegramId(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
+    }
+
     @GetMapping("/preferences/{telegramId}")
     public ResponseEntity<UserPreferencesResponseDto> getUserPreferences(
             @PathVariable Long telegramId

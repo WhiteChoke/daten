@@ -63,7 +63,7 @@ public class ProfileEntity {
     private String bio;
 
     @Column(name = "is_active")
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
     @Column(name = "search_radius")
     private Double searchRadius;

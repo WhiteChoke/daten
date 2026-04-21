@@ -19,6 +19,7 @@ public record ProfileResponseDto(
         Instant registeredAt,
         String bio,
         Double searchRadius,
-        String photoLink
+        String photoLink,
+        Boolean isActive
 ) {
 }
