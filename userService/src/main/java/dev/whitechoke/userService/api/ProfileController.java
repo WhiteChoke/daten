@@ -110,4 +110,15 @@ public class ProfileController {
                 .status(HttpStatus.OK)
                 .body(id);
     }
+
+    @PatchMapping("/activate/{telegramId}")
+    public ResponseEntity<Long> activateProfile(
+            @PathVariable Long telegramId
+    ) {
+        var id = service.activateProfile(telegramId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(id);
+    }
 }

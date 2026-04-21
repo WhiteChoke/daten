@@ -111,6 +111,19 @@ public class ProfileService {
         return entity.getId();
     }
 
+    @Transactional
+    @CachePut(value = "profile", key = "#result")
+    public Long activateProfile(Long telegramId) {
+        var entity = profileRepository.findByTelegramId(telegramId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found entity with telegram id=" + telegramId));
+
+        entity.setIsActive(Boolean.TRUE);
+
+        log.info("Activated profile with telegram id={}", telegramId);
+
+        return entity.getId();
+    }
+
     public UserPreferencesResponseDto getUserPreferences(Long telegramId) {
         var profile = profileRepository.findByTelegramId(telegramId)
                 .orElseThrow(() -> new EntityNotFoundException("Not found entity with id=" + telegramId));
